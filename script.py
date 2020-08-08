@@ -17,7 +17,7 @@ import tweepy
 def get_lat_and_long(city, state):
     """Using Google's Geoencoding API, given a city name, return an array of latitude and longitude"""
     GEO_API_KEY = environ['GEO_API_KEY']
-    url = f'https://maps.googleapis.com/maps/api/geocode/json?address={city},+{state}&key={credentials.GEO_API_KEY}'
+    url = f'https://maps.googleapis.com/maps/api/geocode/json?address={city},+{state}&key={GEO_API_KEY}'
     r = requests.get(url)
     geo_data = r.json()
 
