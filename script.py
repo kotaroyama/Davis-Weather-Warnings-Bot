@@ -13,7 +13,6 @@ import time
 import requests
 import tweepy
 
-import credentials
 
 def get_lat_and_long(city, state):
     """Using Google's Geoencoding API, given a city name, return an array of latitude and longitude"""
