@@ -79,6 +79,8 @@ def get_weather_warning(latitude, longitude):
 
 def tweet_weather(weather_warnings):
     """Tweets out the current active warnings"""
+
+    # Twitter credentials
     CONSUMER_KEY = environ['CONSUMER_KEY']
     CONSUMER_SECRET = environ['CONSUMER_SECRET']
     ACCESS_KEY = environ['ACCESS_KEY']
@@ -105,7 +107,7 @@ def tweet_weather(weather_warnings):
     # Prepare tweets
     #   Tweet start with "Current time: hh:mm AM/PM on MM/DD/YYYY"
     #   Turn the description string into a queue split into words
-    current_time = "(Update) " + datetime.now().strftime("%I:%M %p %b %d %Y")
+    current_time = "(Update) " + datetime.utcnow().strftime("%I:%M %p %b %d %Y") + " (UTC)"
     description_queue = deque(description.split())
 
     # Initialize the tweets list
