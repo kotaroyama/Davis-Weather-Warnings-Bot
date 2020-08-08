@@ -7,6 +7,7 @@ Written by Kotaro Yama (kotaro.h.yama@gmail.com)"""
 
 from collections import deque
 from datetime import datetime
+from os import environ
 import time
 
 import requests
@@ -16,6 +17,7 @@ import credentials
 
 def get_lat_and_long(city, state):
     """Using Google's Geoencoding API, given a city name, return an array of latitude and longitude"""
+    GEO_API_KEY = environ['GEO_API_KEY']
     url = f'https://maps.googleapis.com/maps/api/geocode/json?address={city},+{state}&key={credentials.GEO_API_KEY}'
     r = requests.get(url)
     geo_data = r.json()
@@ -78,8 +80,13 @@ def get_weather_warning(latitude, longitude):
 
 def tweet_weather(weather_warnings):
     """Tweets out the current active warnings"""
-    auth = tweepy.OAuthHandler(credentials.CONSUMER_KEY, credentials.CONSUMER_SECRET)
-    auth.set_access_token(credentials.ACCESS_KEY, credentials.ACCESS_SECRET)
+    CONSUMER_KEY = environ['CONSUMER_KEY']
+    CONSUMER_SECRET = environ['CONSUMER_SECRET']
+    ACCESS_KEY = environ['ACCESS_KEY']
+    ACCESS_SECRET = environ['ACCESS_SECRET']
+
+    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+    auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
     api = tweepy.API(auth)
 
     # Components of the tweet
