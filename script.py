@@ -100,6 +100,9 @@ def tweet_weather(weather_warnings):
     num_of_chars = len(headline) + len(description)
     num_of_tweets = int(num_of_chars / num_of_max)
 
+    if num_of_chars % num_of_max != 0:
+        num_of_tweets += 1
+
     # Additional tweet for remainders
     if num_of_chars % num_of_max:
         num_of_tweets += 1
@@ -107,12 +110,13 @@ def tweet_weather(weather_warnings):
     # Prepare tweets
     #   Tweet start with "Current time: hh:mm AM/PM on MM/DD/YYYY"
     #   Turn the description string into a queue split into words
-    current_time = "(Update) " + datetime.utcnow().strftime("%I:%M %p %b %d %Y") + " (UTC)"
+    current_time = "(Updated) " + datetime.utcnow().strftime("%I:%M %p %b %d %Y") + " (UTC)"
     description_queue = deque(description.split())
 
     # Initialize the tweets list
     tweets = [None] * num_of_tweets
-    tweets[0] = current_time + '\n\n'
+    tweets[0] = f"({1}/{len(tweets)})\n\n"
+    tweets[0] += current_time + '\n\n'
     tweets[0] += headline + '\n\n'
 
     if weather_warnings['active']:
@@ -120,19 +124,21 @@ def tweet_weather(weather_warnings):
         #   If the description exceeds that, it's split into multiple tweets
         #   As you add words into tweets, pop the queue 
         for i in range(0, num_of_tweets):
+            num_of_part = i + 1
             # If it's not the first tweet, then add "..."
             if i != 0:
-                tweets[i] = '...'
+                tweets[i] = f"({num_of_part}/{len(tweets)})\n\n"
+                tweets[i] += '...'
 
             while description_queue:
                 # Add '...' at the end if the description continues onto next tweet
                 if tweets[i] and len(tweets[i]) + len(description_queue[0]) > (num_of_max - 3):
-                    tweets[i] += '...'
+                    if i == len(tweets):
+                        tweets[i] += '.'
+                    else:
+                        tweets[i] += '...'
                     break
                 elif tweets[i]:
-                    tweets[i] += description_queue.popleft()
-                    tweets[i] += ' '
-                else:
                     tweets[i] += description_queue.popleft()
                     tweets[i] += ' '
     else:
