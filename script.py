@@ -42,7 +42,7 @@ def get_weather_warning(latitude, longitude):
     weather_data = r.json()
 
     # Extract Area Code and get the active weather warnings
-    zone = weather_data['properties']['fireWeatherZone'][-6:]
+    zone = weather_data['properties']['forecastZone'][-6:]
     url = f"https://api.weather.gov/alerts/active/zone/{zone}"
     r = requests.get(url)
 
