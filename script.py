@@ -13,13 +13,10 @@ import time
 import requests
 import tweepy
 
-import credentials
-
 
 def get_lat_and_long(city, state):
     """Using Google's Geoencoding API, given a city name, return an array of latitude and longitude"""
-    # GEO_API_KEY = environ['GEO_API_KEY']
-    GEO_API_KEY = credentials.GEO_API_KEY
+    GEO_API_KEY = environ['GEO_API_KEY']
     url = f'https://maps.googleapis.com/maps/api/geocode/json?address={city},+{state}&key={GEO_API_KEY}'
     r = requests.get(url)
     geo_data = r.json()
@@ -83,19 +80,11 @@ def get_weather_warning(latitude, longitude):
 def tweet_weather(weather_warnings):
     """Tweets out the current active warnings"""
 
-    """
     # Twitter credentials
     CONSUMER_KEY = environ['CONSUMER_KEY']
     CONSUMER_SECRET = environ['CONSUMER_SECRET']
     ACCESS_KEY = environ['ACCESS_KEY']
     ACCESS_SECRET = environ['ACCESS_SECRET']
-    """
-
-    # Twitter credentials
-    CONSUMER_KEY = credentials.CONSUMER_KEY
-    CONSUMER_SECRET = credentials.CONSUMER_SECRET
-    ACCESS_KEY = credentials.ACCESS_KEY
-    ACCESS_SECRET = credentials.ACCESS_SECRET
 
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
