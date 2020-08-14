@@ -101,6 +101,8 @@ def tweet_weather(weather_warnings):
     num_of_tweets = int(num_of_chars / num_of_max)
 
     if num_of_chars % num_of_max != 0:
+        num_of_tweets += 2
+    else:
         num_of_tweets += 1
 
     # Additional tweet for remainders
