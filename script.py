@@ -100,19 +100,17 @@ def tweet_weather(weather_warnings):
     num_of_chars = len(headline) + len(description)
     num_of_tweets = int(num_of_chars / num_of_max)
 
-    if num_of_chars % num_of_max != 0:
-        num_of_tweets += 2
-    else:
-        num_of_tweets += 1
-
     # Additional tweet for remainders
     if num_of_chars % num_of_max:
+        num_of_tweets += 2
+    else:
         num_of_tweets += 1
 
     # Prepare tweets
     #   Tweet start with "Current time: hh:mm AM/PM on MM/DD/YYYY"
     #   Turn the description string into a queue split into words
-    current_time = "(Updated) " + datetime.utcnow().strftime("%I:%M %p %b %d %Y") + " (UTC)"
+    os.environ['TZ'] = "America/Los_Angeles"
+    current_time = "(Updated) " + datetime.utcnow().strftime("%I:%M %p %b %d %Y %Z")
     description_queue = deque(description.split())
 
     # Initialize the tweets list
