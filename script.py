@@ -145,12 +145,8 @@ def tweet_weather(weather_warnings):
         tweets[0] += "Good for now... Go Aggies!"
 
     # Tweets using Tweepy API
-    #for tweet in tweets:
-        #api.update_status(tweet)
-    
     for tweet in tweets:
-        print(tweet)
-        print("\n")
+        api.update_status(tweet)
 
 def main():
     # City and state for lat and long
