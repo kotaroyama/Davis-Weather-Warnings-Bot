@@ -109,7 +109,7 @@ def tweet_weather(weather_warnings):
     # Prepare tweets
     #   Tweet start with "Current time: hh:mm AM/PM on MM/DD/YYYY"
     #   Turn the description string into a queue split into words
-    os.environ['TZ'] = "America/Los_Angeles"
+    environ['TZ'] = "America/Los_Angeles"
     time.tzset()
     current_time = "(Updated) " + datetime.utcnow().strftime("%I:%M %p %b %d %Y %Z")
     description_queue = deque(description.split())
