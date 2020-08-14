@@ -13,10 +13,13 @@ import time
 import requests
 import tweepy
 
+import credentials
+
 
 def get_lat_and_long(city, state):
     """Using Google's Geoencoding API, given a city name, return an array of latitude and longitude"""
-    GEO_API_KEY = environ['GEO_API_KEY']
+    # GEO_API_KEY = environ['GEO_API_KEY']
+    GEO_API_KEY = credentials.GEO_API_KEY
     url = f'https://maps.googleapis.com/maps/api/geocode/json?address={city},+{state}&key={GEO_API_KEY}'
     r = requests.get(url)
     geo_data = r.json()
@@ -80,11 +83,19 @@ def get_weather_warning(latitude, longitude):
 def tweet_weather(weather_warnings):
     """Tweets out the current active warnings"""
 
+    """
     # Twitter credentials
     CONSUMER_KEY = environ['CONSUMER_KEY']
     CONSUMER_SECRET = environ['CONSUMER_SECRET']
     ACCESS_KEY = environ['ACCESS_KEY']
     ACCESS_SECRET = environ['ACCESS_SECRET']
+    """
+
+    # Twitter credentials
+    CONSUMER_KEY = credentials.CONSUMER_KEY
+    CONSUMER_SECRET = credentials.CONSUMER_SECRET
+    ACCESS_KEY = credentials.ACCESS_KEY
+    ACCESS_SECRET = credentials.ACCESS_SECRET
 
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
@@ -109,8 +120,6 @@ def tweet_weather(weather_warnings):
     # Prepare tweets
     #   Tweet start with "Current time: hh:mm AM/PM on MM/DD/YYYY"
     #   Turn the description string into a queue split into words
-    environ['TZ'] = "America/Los_Angeles"
-    time.tzset()
     current_time = "(Updated) " + datetime.utcnow().strftime("%I:%M %p %b %d %Y %Z")
     description_queue = deque(description.split())
 
@@ -134,7 +143,7 @@ def tweet_weather(weather_warnings):
 
             while description_queue:
                 # Add '...' at the end if the description continues onto next tweet
-                if tweets[i] and len(tweets[i]) + len(description_queue[0]) > (num_of_max - 3):
+                if tweets[i] and len(tweets[i]) + len(description_queue[0]) >= (num_of_max - 3):
                     if i == len(tweets):
                         tweets[i] += '.'
                     else:
@@ -147,8 +156,12 @@ def tweet_weather(weather_warnings):
         tweets[0] += "Good for now... Go Aggies!"
 
     # Tweets using Tweepy API
+    #for tweet in tweets:
+        #api.update_status(tweet)
+    
     for tweet in tweets:
-        api.update_status(tweet)
+        print(tweet)
+        print("\n")
 
 def main():
     # City and state for lat and long
