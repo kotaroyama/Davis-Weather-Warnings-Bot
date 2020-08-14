@@ -127,7 +127,7 @@ def tweet_weather(weather_warnings):
             num_of_part = i + 1
             # If it's not the first tweet, then add "..."
             if i != 0:
-                tweets[i] = f"({num_of_part}/{len(tweets)}) "
+                tweets[i] = f"({num_of_part}/{len(tweets)})\n\n"
                 tweets[i] += current_time + '\n\n'
                 tweets[i] += '...'
 
