@@ -101,10 +101,11 @@ def tweet_weather(weather_warnings):
     num_of_tweets = int(num_of_chars / num_of_max)
 
     # Additional tweet for remainders
-    if num_of_chars % num_of_max:
-        num_of_tweets += 2
-    else:
-        num_of_tweets += 1
+    if weather_warnings['active']:
+        if num_of_chars % num_of_max:
+            num_of_tweets += 2
+        else:
+            num_of_tweets += 1
 
     # Prepare tweets
     #   Tweet start with "Current time: hh:mm AM/PM on MM/DD/YYYY"
