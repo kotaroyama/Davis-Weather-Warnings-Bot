@@ -24,12 +24,12 @@ def get_lat_and_long(city, state):
     # Extract lat and long from the JSON
     latitude = str(geo_data['results'][0]['geometry']['location']['lat'])
     longitude = str(geo_data['results'][0]['geometry']['location']['lng'])
-    
+
     # Dictionary with coordinates
     coordinates = {'latitude': latitude[:-3], 'longitude': longitude[:-3]}
 
     return coordinates
-    
+
 def get_weather_warning(latitude, longitude):
     """Using National Weather Service API (weather.gov), get the weather
     warnings for the current area
@@ -48,18 +48,18 @@ def get_weather_warning(latitude, longitude):
 
     warnings = []
     # Array of Warnings to be returned
-    warnings_legible = [] 
+    warnings_legible = []
 
     # If there is/are active warning(s)
     if r.json()['features']:
         warnings = r.json()['features']
         # Parse Warnings 
         for warning in warnings:
-            counties_affected = warning['properties']['areaDesc']  
+            counties_affected = warning['properties']['areaDesc']
             headline = warning['properties']['headline']
-            sender_name = warning['properties']['senderName'] 
+            sender_name = warning['properties']['senderName']
             description = warning['properties']['description']
-            
+
             # Append the formatted warning to the list
             warnings_legible.append({
                 "counties_affected": counties_affected,
