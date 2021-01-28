@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+  <style>
+    body {
+      font-family: "Roboto", sans-serif;
+    }
+    .head {
+      font-weight: bold;
+    }
+  </style>
+  <title>Weather Alerts</title>
+</head>
+<body>
+  <header>
+    <div class="container-fluid p-4 mb-2 bg-danger text-white">
+      <div class="row justify-content-around">
+        <div class="col col-sm-7">
+          <h1 class="head text-center">{{ weather_data['head'] }}</h1>
+        </div>
+        <div class="col col-sm-4 align-self-end">
+          <p class="text-center text-muted">{{ weather_data['by'] }}</p>
+        </div>
+      </div>
+    </div>
+  </header>
+  <section class="description">
+    <div class="container mt-3">
+      <div class="row justify-content-center">
+        <div class="list-group">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">Where</h5>
+          </div>
+          <p class="ml-3 mb-3">{{ weather_data['where'] }}</p>
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">When</h5>
+          </div>
+          <p class="ml-3 mb-3">{{ weather_data['when'] }}</p>
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">What</h5>
+          </div>
+          <div class="ml-3 mb-1">
+            <pre>
+              <p class="text-start">{{ weather_data['what'] }}</p>
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> 
+</body>
+</html>
