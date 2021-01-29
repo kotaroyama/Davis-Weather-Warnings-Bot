@@ -1,4 +1,3 @@
-from collections import deque
 from datetime import datetime
 from os import environ
 
@@ -26,13 +25,13 @@ def tweet_weather(weather_warnings):
     api = twitter_api()
 
     # Current time to be added to the tweet
-    today = date.today()
-    time_formatted = today.strftime("%I:%M %p %b %d %Y")
+    time_now = datetime.now()
+    time_formatted = time_now.strftime("%I:%M %p %b %d %Y")
    
     # Check if there is an active warning
     if weather_warnings['active']:
         # Create an html file to be converted to an image
-        create_html(weather_warnings)    
+        create_html(weather_warnings)
 
         # Convert the html file to an image
         html_file = 'templates/alert.html'
