@@ -24,6 +24,10 @@ def twitter_api():
 def tweet_weather(weather_warnings):
     """Tweets out the current active warnings"""
     api = twitter_api()
+
+    # Current time to be added to the tweet
+    today = date.today()
+    time_formatted = today.strftime("%I:%M %p %b %d %Y")
    
     # Check if there is an active warning
     if weather_warnings['active']:
@@ -42,11 +46,11 @@ def tweet_weather(weather_warnings):
             return
         
         # Tweet the image along with a message
-        message = 'Active warning!'
+        message = f'{time_formatted}\n\nActive warning!'
         api.update_with_media(image_file, status=message)
 
         print('Tweeted successfully')
     else:
         # Tweet with empty message
-        tweet = 'Good for now... Go Aggies!'
+        tweet = f'{time_formatted}\n\nGood for now... Go Aggies!'
         api.update_status(tweet)
