@@ -97,8 +97,8 @@ def main():
     # City and state for lat and long
     #   City - use '+' for space
     #   State: use two char ANSI abbreviations   
-    city = "Stanley"
-    state = "ID"
+    city = "Davis"
+    state = "CA"
     location = get_lat_and_long(city, state)
 
     weather_warnings = get_weather_warning(location['latitude'], location['longitude'])
