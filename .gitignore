@@ -1,4 +1,7 @@
+/* credentials */
 credentials.py
+credentials.sh
+
 __pycache__/
 venv/
 
