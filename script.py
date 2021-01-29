@@ -48,7 +48,6 @@ def get_weather_warning(latitude, longitude):
     r = requests.get(url)
 
     warnings = []
-    # Array of Warnings to be returned
     warnings_legible = []
 
     # If there is/are active warning(s)
@@ -72,10 +71,13 @@ def get_weather_warning(latitude, longitude):
         print("No warnings")
         warnings_legible.append({
             "active": False,
-            "headline": "No active warnings.",
+            "head": "No active warnings.",
             "description": "N/A"
         })
+        weather_data = warnings_legible[0]
+        return weather_data
 
+    # regular expressions to extract head, place and the issuer
     m_head = re.search('.+?(?= issued)', warnings_legible[0]['headline'])
     m_where = re.search('(?<=issued ).+?(?= by)', warnings_legible[0]['headline'])
     m_by = re.search('(?<=by ).*', warnings_legible[0]['headline'])
@@ -95,17 +97,17 @@ def main():
     # City and state for lat and long
     #   City - use '+' for space
     #   State: use two char ANSI abbreviations   
-    city = "Davis"
-    state = "CA"
+    city = "Stanley"
+    state = "ID"
     location = get_lat_and_long(city, state)
 
     weather_warnings = get_weather_warning(location['latitude'], location['longitude'])
 
     # Run the bot every hour
-# INTERVAL = 60 * 60
-# while True:
-# tweet_weather(weather_warnings)
-# time.sleep(INTERVAL)
+    INTERVAL = 60 * 60
+    while True:
+        tweet_weather(weather_warnings)
+        time.sleep(INTERVAL)
 
 if __name__ == "__main__":
     main()
