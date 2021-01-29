@@ -1,4 +1,8 @@
+from os import environ
+from shutil import copyfileobj
+
 from jinja2 import Environment, PackageLoader, select_autoescape
+import requests
 
 from script import get_weather_warning, get_lat_and_long 
 
@@ -19,9 +23,41 @@ def create_html(weather_data):
         print("Output successfully saved to alert.html")
 
 
+def html_to_img(html_file):
+    HCTI_API_ENDPOINT = "https://hcti.io/v1/image"
+    # Retrieve these from https://htmlcsstoimage.com/dashboard
+    HCTI_API_USER_ID = environ['HCTI_API_USER_ID']
+    HCTI_API_KEY = environ['HCTI_API_KEY']
+    
+    # Read alert.html
+    with open(html_file, 'r') as f:
+        html_content = f.read()
+        data = {
+            'html': html_content,
+            'viewport_height': 700,
+            'viewport_width': 900,
+            'google_fonts': 'Roboto'
+        }
+        image = requests.post(
+            url=HCTI_API_ENDPOINT,
+            data=data,
+            auth=(HCTI_API_USER_ID, HCTI_API_KEY)
+        )
+
+        # Write to template/out.jpg
+        url = image.json()['url']
+        r = requests.get(url, stream=True)
+        image_file = 'templates/out.jpg'
+        with open(image_file, 'wb') as output:
+            copyfileobj(r.raw, output)
+            print('Successfully saved to out.jpg')
+
+
 if __name__ == '__main__':
-    city = 'Davis'
-    state = 'CA'
-    location = get_lat_and_long(city, state) 
+    # For manual testing
+    city = 'Stanley'
+    state = 'ID'
+    location = get_lat_and_long(city, state)
     weather_data = get_weather_warning(location['latitude'], location['longitude'])
     create_html(weather_data)
+    html_to_img('templates/alert.html')
