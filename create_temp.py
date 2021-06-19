@@ -5,6 +5,7 @@ from shutil import copyfileobj
 from jinja2 import Environment, PackageLoader, select_autoescape
 import requests
 
+
 CURRENT_DIR = dirname(abspath(__file__))
 
 def create_html(weather_data):

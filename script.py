@@ -93,11 +93,13 @@ def get_weather_warning(latitude, longitude):
 
     return weather_data
 
+
 def generate_what(description):
     # Generate organized 'what' description
     chunks = description.split('*')
     what = chunks[1][8:]
     return what
+
 
 def main():
     # City and state for lat and long
