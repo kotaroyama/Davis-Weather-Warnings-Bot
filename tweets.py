@@ -51,5 +51,5 @@ def tweet_weather(weather_warnings):
         print('Tweeted successfully')
     else:
         # Tweet with empty message
-        tweet = f'{time_formatted}\n\nGood for now... Go Aggies!'
+        tweet = f'{time_formatted}\n\nNo Alerts Found.'
         api.update_status(tweet)
