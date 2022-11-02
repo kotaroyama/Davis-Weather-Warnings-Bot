@@ -27,5 +27,5 @@ def html_to_img(html_file):
         "height": "700",
     }
     imgkit.from_file(f'{CURRENT_DIR}/templates/{html_file}', f'{CURRENT_DIR}/templates/{output_file}', options=options);
-    with open(output_file, 'r') as output:
+    with open(f'{CURRENT_DIR}/templates/{output_file}', 'r') as output:
         print('Successfully saved to out.jpg')

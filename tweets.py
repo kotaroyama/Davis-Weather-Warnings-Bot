@@ -1,5 +1,5 @@
 from datetime import datetime
-from os import environ
+from os import environ, remove
 
 import requests
 import tweepy
@@ -49,6 +49,8 @@ def tweet_weather(weather_warnings):
         api.update_with_media(f'templates/{image_file}', status=message)
 
         print('Tweeted successfully')
+        remove(f'templates/{image_file}')
+
     else:
         # Tweet with empty message
         tweet = f'{time_formatted}\n\nNo Alerts Found.'
