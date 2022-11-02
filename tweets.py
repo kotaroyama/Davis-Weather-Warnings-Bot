@@ -34,8 +34,8 @@ def tweet_weather(weather_warnings):
         create_html(weather_warnings)
 
         # Convert the html file to an image
-        html_file = 'templates/alert.html'
-        image_file = 'templates/out.jpg'
+        html_file = 'alert.html'
+        image_file = 'out.jpg'
 
         try:
             html_to_img(html_file)
@@ -46,7 +46,7 @@ def tweet_weather(weather_warnings):
         
         # Tweet the image along with a message
         message = f'{time_formatted}\n\nActive warning!'
-        api.update_with_media(image_file, status=message)
+        api.update_with_media(f'templates/{image_file}', status=message)
 
         print('Tweeted successfully')
     else:
