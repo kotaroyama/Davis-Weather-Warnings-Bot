@@ -1,6 +1,7 @@
 from datetime import datetime
 from os import environ, remove
 
+from pytz import timezone
 import requests
 import tweepy
 
@@ -25,7 +26,8 @@ def tweet_weather(weather_warnings):
     api = twitter_api()
 
     # Current time to be added to the tweet
-    time_now = datetime.now()
+    # time_now = datetime.now()
+    time_now = datetime.now(timezone('US/Pacific'))
     time_formatted = time_now.strftime("%I:%M %p %b %d %Y")
    
     # Check if there is an active warning
