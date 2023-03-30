@@ -110,12 +110,7 @@ def main():
     location = get_lat_and_long(city, state)
 
     weather_warnings = get_weather_warning(location['latitude'], location['longitude'])
-
-    # Run the bot every hour
-    INTERVAL = 60 * 60
-    while True:
-        tweet_weather(weather_warnings)
-        time.sleep(INTERVAL)
+    tweet_weather(weather_warnings, city, state)
 
 if __name__ == "__main__":
     main()

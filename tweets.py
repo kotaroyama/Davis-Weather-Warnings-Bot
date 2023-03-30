@@ -1,11 +1,12 @@
 from datetime import datetime
 from os import environ, remove
 
+import boto3
 from pytz import timezone
 import requests
 import tweepy
 
-from create_temp import create_html, html_to_img
+from create_temp import create_html
 
 
 def twitter_api():
@@ -21,7 +22,26 @@ def twitter_api():
     return api
 
 
-def tweet_weather(weather_warnings):
+def upload_html_to_s3(html_file):
+    # Upload the file
+    s3_client = boto3.client(
+        's3',
+        region_name='us-west-1',
+        aws_access_key_id=environ['AWS_ACCESS_KEY_ID'],
+        aws_secret_access_key=environ['AWS_SECRET_ACCESS_KEY']
+    )
+    s3_client.upload_file(
+        f'templates/{html_file}',
+        'davis-weather-bot-images',
+        html_file,
+        ExtraArgs={
+            'ContentType': "text/html",
+            'ACL':'public-read',
+        }
+    )
+
+
+def tweet_weather(weather_warnings, city, state):
     """Tweets out the current active warnings"""
     api = twitter_api()
 
@@ -34,26 +54,19 @@ def tweet_weather(weather_warnings):
     if weather_warnings['active']:
         # Create an html file to be converted to an image
         create_html(weather_warnings)
+        html_file = 'index.html'
 
-        # Convert the html file to an image
-        html_file = 'alert.html'
-        image_file = 'out.jpg'
+        # Upload the html to S3 bucket and get the URL
+        upload_html_to_s3(html_file)
 
-        try:
-            html_to_img(html_file)
-        except requests.exceptions.HTTPError as e:
-            status_code = e.response.status_code
-            print(f"An error occurred while converting html to jpg. Status code is {status_code}.")
-            return
-        
         # Tweet the image along with a message
-        message = f'{time_formatted}\n\nActive warning!'
-        api.update_with_media(f'templates/{image_file}', status=message)
+        tweet = f'{time_formatted}\n\nActive warning in {city}, {state}.\n\nhttps://davis-weather-bot-images.s3.us-west-1.amazonaws.com/index.html'
+        api.update_status(tweet)
 
         print('Tweeted successfully')
-        remove(f'templates/{image_file}')
-
+"""
     else:
         # Tweet with empty message
         tweet = f'{time_formatted}\n\nNo Alerts Found.'
         api.update_status(tweet)
+"""
