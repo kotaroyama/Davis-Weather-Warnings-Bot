@@ -1,9 +1,12 @@
 /* credentials */
 credentials.py
 credentials.sh
+.env
 
 __pycache__/
 venv/
+
+images/
 
 sample_warning.dat
 
