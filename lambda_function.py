@@ -101,7 +101,8 @@ def generate_what(description):
     return what
 
 
-def main():
+def lambda_handler(event, context):
+# def main():
     # City and state for lat and long
     #   City - use '+' for space
     #   State: use two char ANSI abbreviations   
@@ -112,5 +113,5 @@ def main():
     weather_warnings = get_weather_warning(location['latitude'], location['longitude'])
     tweet_weather(weather_warnings, city, state)
 
-if __name__ == "__main__":
-    main()
+    return {"statusCode": 200}
+

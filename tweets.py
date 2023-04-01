@@ -24,14 +24,17 @@ def twitter_api():
 
 def upload_html_to_s3(html_file):
     # Upload the file
+    """
     s3_client = boto3.client(
         's3',
         region_name='us-west-1',
         aws_access_key_id=environ['AWS_ACCESS_KEY_ID'],
         aws_secret_access_key=environ['AWS_SECRET_ACCESS_KEY']
     )
+    """
+    s3_client = boto3.client('s3')
     s3_client.upload_file(
-        f'templates/{html_file}',
+        f'/tmp/{html_file}',
         'davis-weather-bot-images',
         html_file,
         ExtraArgs={
